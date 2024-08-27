@@ -1,2 +1,1 @@
-# mysite
-Mi sitio Web. 
+# README
