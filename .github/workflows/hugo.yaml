@@ -1,75 +1,71 @@
-# Nombre de la acción
+# Sample workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Hugo site to Pages
 
-# Se activará cuando se haga un push sobre la rama main
 on:
+  # Runs on pushes targeting the default branch
   push:
     branches:
       - main
 
-# Permisos para que pueda leer el contenido del repo y
-# pueda escribir sobre la funcionalidad de GitHub Pages
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Estará asociado al grupo relacionado con pages y no cancelará
-# otros procesos que estén en ejecución
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# Define bash como el encargado de ejecutar los trabajos
+# Default to bash
 defaults:
   run:
     shell: bash
 
-# En este apartado define el entorno usado para el workflow
 jobs:
-  # 1 TRABAJO DE CONSTRUCCIÓN DEL SITIO
+  # Build job
   build:
-    # Entorno
     runs-on: ubuntu-latest
     env:
-      # Esta variable permite cambiar fácilmente la versión de HUGO usada
-      HUGO_VERSION: 0.133.1  # Actualiza a la última versión de Hugo
+      HUGO_VERSION: 0.123.0
     steps:
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb          
       - name: Install Dart Sass
         run: sudo snap install dart-sass
-      # Prepara el entorno para desplegar las páginas
       - name: Checkout
-        uses: actions/checkout@v4  # Verifica la última versión en el repositorio de actions/checkout
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v4  # Verifica la última versión en el repositorio de actions/configure-pages
+        uses: actions/configure-pages@v4
       - name: Install Node.js dependencies
-        run: "yarn install"
-      # Configura las variables de entorno de HUGO y procede a
-      # ejecutar el comando para construir el sitio.
+        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
       - name: Build with Hugo
         env:
+          # For maximum backward compatibility with Hugo modules
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
-      # Sube el contenido generado por hugo al directorio de GitHub Pages
+            --baseURL "${{ steps.pages.outputs.base_url }}/"          
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3  # Actualizado a la versión más reciente
+        uses: actions/upload-pages-artifact@v2
         with:
           path: ./public
 
-  # 2 REDESPLIEGA EL SITIO EN GITHUB PAGES CON LOS NUEVOS CAMBIOS
+  # Deployment job
   deploy:
     environment:
       name: github-pages
@@ -79,4 +75,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # Verifica la última versión en el repositorio de actions/deploy-pages
+        uses: actions/deploy-pages@v3
