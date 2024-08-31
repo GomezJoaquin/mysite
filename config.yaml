@@ -3,8 +3,6 @@ baseURL: "https://gomezjoaquin.github.io/mysite/"
 languageCode: "en-us"
 title: "Joaquín Gómez"
 theme: hugo-profile
-
-
 outputs:
   home:
     - "HTML"
