@@ -65,7 +65,7 @@ jobs:
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       # Sube el contenido generado por hugo al directorio de GitHub Pages
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4  # Actualizado a la versión más reciente
+        uses: actions/upload-pages-artifact@v3  # Actualizado a la versión más reciente
         with:
           path: ./public
 
