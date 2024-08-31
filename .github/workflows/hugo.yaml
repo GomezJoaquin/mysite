@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Esta variable permite cambiar fácilmente la versión de HUGO usada
-      HUGO_VERSION: 0.126.0  # Actualiza a la última versión de Hugo
+      HUGO_VERSION: 0.133.1  # Actualiza a la última versión de Hugo
     steps:
       - name: Install Hugo CLI
         run: |
