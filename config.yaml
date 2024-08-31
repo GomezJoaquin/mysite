@@ -1,9 +1,9 @@
 #baseURL: "https://hugo-profile.netlify.app"
 baseURL: "https://gomezjoaquin.github.io/mysite"
-
 languageCode: "en-us"
 title: "Joaquín Gómez"
 theme: hugo-profile
+
 outputs:
   home:
     - "HTML"
@@ -12,8 +12,8 @@ outputs:
   page:
     - "HTML"
     - "RSS"
-
 Paginate: 3
+
 enableRobotsTXT: true
 # disqusShortname: your-disqus-shortname
 # googleAnalytics: G-MEASUREMENT_ID
