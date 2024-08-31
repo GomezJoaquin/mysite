@@ -1,5 +1,5 @@
-#baseURL: "https://hugo-profile.netlify.app"
-baseURL: "https://gomezjoaquin.github.io/mysite/"
+baseURL: "https://hugo-profile.netlify.app"
+#baseURL: "https://gomezjoaquin.github.io/mysite/"
 languageCode: "en-us"
 title: "Joaquín Gómez"
 theme: hugo-profile
