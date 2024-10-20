@@ -7,6 +7,7 @@ tags:
   - Markdown syntax
   - Mathjax
   - example
+  - ansible
 image: /images/mathjax.png
 description: ""
 toc: true
